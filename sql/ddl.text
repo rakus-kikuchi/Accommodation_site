@@ -1,6 +1,5 @@
 CREATE DATABASE hotel_data;
 
-
 --ユーザー
 DROP TABLE IF EXISTS users;
 
