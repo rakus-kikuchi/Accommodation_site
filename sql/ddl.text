@@ -1,0 +1,134 @@
+CREATE DATABASE hotel_data;
+
+
+--ユーザー
+DROP TABLE IF EXISTS users;
+
+CREATE TABLE users(
+    id SERIAL PRIMARY KEY,
+    name varchar(100) NOT NULL,
+    mailaddress varchar(100) NOT NULL UNIQUE,
+    password text NOT NULL,
+    zip_code varchar(8) NOT NULL,
+    prefectures varchar(10) NOT NULL,
+    municipality varchar(10) NOT NULL,
+    address varchar(20) NOT NULL,
+    telephone varchar(10) NOT NULL
+);
+COMMENT ON COLUMN users.zip_code IS '郵便番号';
+COMMENT ON COLUMN users.prefectures IS '都道府県';
+COMMENT ON COLUMN users.municipality IS '市町村';
+COMMENT ON COLUMN users.address IS '住所';
+
+
+
+--管理者
+
+
+
+--ホテル情報
+DROP TABLE IF EXISTS hotels;
+CREATE TABLE hotels(
+    id SERIAL PRIMARY KEY,
+    name varchar(100) NOT NULL,
+    hotel_id Integer Not Null,
+    telephone varchar(10) NOT NULL,
+    zip_code varchar(8) NOT NULL,
+    prefectures varchar(10) NOT NULL,
+    municipality varchar(10) NOT NULL,
+    address varchar(20) NOT NULL,
+    access varchar(20) NOT NULL,
+    parking varchar(100) NOT NULL,
+    content varchar(100) NOT NULL,
+    image_path varchar(100) NOT NULL,
+    url varchar(100) NOT NULL
+);
+
+
+--プラン情報
+DROP TABLE IF EXISTS plans;
+CREATE TABLE plans(
+    id SERIAL Primary Key Not Null,
+    name text Not Null,
+    hotel_id Integer Not Null,
+    breakfarst boolean Not Null,
+    diner boolean Not Null,
+    people_num Integer Not Null,
+    price Integer Not Null,
+    room_type text Not Null,
+    start_date timestamp ,
+    finish_date timestamp ,
+    warning text ,
+    rest_room Integer Not Null,
+    close_flag boolean Not Null default false
+);
+
+
+--予約情報
+DROP TABLE IF EXISTS reservations;
+CREATE TABLE reservations(
+    id SERIAL Primary Key Not Null,
+    plan_id Integer Not Null,
+    reservation_day timestamp Not Null,
+    checkin_date timestamp Not Null,
+    checkinout_date timestamp Not Null,
+    customer_name text Not Null,
+    customer_tel Integer Not Null,
+    customer_num Integer Not Null,
+    customer_others text ,
+    payment_status Integer Not Null default 0,
+    coupon_id Integer
+);
+
+
+
+--予約状況
+DROP TABLE IF EXISTS reservation_status;
+CREATE TABLE reservation_status(
+    id SERIAL Primary Key Not Null,
+    lodging_day timestamp Not Null,
+    plan_id Integer Not Null,
+    reservation_id Integer Not Null
+);
+
+
+--写真
+DROP TABLE IF EXISTS images;
+CREATE TABLE images(
+    id SERIAL Primary Key Not Null,
+    plan_id Integer Not Null,
+    image_path text Not Null UNIQUE
+);
+
+
+--クーポン情報
+DROP TABLE IF EXISTS coupons;
+CREATE TABLE coupons(
+    id SERIAL Primary Key Not Null,
+    name text Not Null,
+    plan_id Integer Not Null,
+    price Integer Not Null,
+    close_flag boolean Not Null default false
+);
+
+
+--ユーザーが所持しているクーポン
+DROP TABLE IF EXISTS user_coupon;
+CREATE TABLE user_coupon(
+    id SERIAL Primary Key Not Null,
+    coupon_id Integer Not Null,
+    user_id Integer Not Null,
+    used_flag boolean Not Null
+);
+
+
+--レビュー
+DROP TABLE IF EXISTS reviews;
+CREATE TABLE reviews(
+    id SERIAL Primary Key Not Null,
+    title text Not Null,
+    content text Not Null,
+    user_id Integer Not Null,
+    ster_num Integer Not Null,
+    posted boolean default false
+);
