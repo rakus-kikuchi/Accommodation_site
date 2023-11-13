@@ -1,0 +1,89 @@
+--ユーザー--
+INSERT INTO users (name, mailaddress, password, zip_code, prefectures, municipality, address, telephone)
+VALUES
+    ('田中 太郎', 'tanaka.tarou@example.com', 'password1', '12345678', '東京都', '渋谷区', '1-2-3', '11111111111'),
+    ('山田 花子', 'yamada.hanako@example.com', 'password2', '98765432', '大阪府', '大阪市', '4-5-6', '22222222222'),
+    ('鈴木 一郎', 'suzuki.ichiro@example.com', 'password3', '11111111', '福岡県', '福岡市', '7-8-9', '33333333333'),
+    ('佐藤 みゆき', 'sato.miyuki@example.com', 'password4', '22223333', '京都府', '京都市', '10-11-12', '44444444444'),
+    ('中村 健太', 'nakamura.kenta@example.com', 'password5', '87654321', '北海道', '札幌市', '13-14-15', '55555555555');
+
+
+
+--ホテル--
+INSERT INTO hotels (name, hotel_id, telephone, zip_code, prefectures, municipality, address, access, parking, content, image_path, url)
+VALUES
+    ('ホテルA', 1, '1111111111', '12345678', '東京都', '渋谷区', '1-2-3', '渋谷駅から徒歩5分', '有料駐車場あり', '快適な客室を提供します', 'hotel_a.jpg', 'https://www.hotel-a.com'),
+    ('ホテルB', 2, '2222222222', '98765432', '大阪府', '大阪市', '4-5-6', 'アクセス便利', '無料駐車場完備', '観光地に近い便利なホテル', 'hotel_b.jpg', 'https://www.hotel-b.com'),
+    ('ホテルC', 3, '3333333333', '11111111', '福岡県', '福岡市', '7-8-9', 'JR駅から徒歩10分', '駐車場なし', 'モダンで落ち着いた雰囲気のホテル', 'hotel_c.jpg', 'https://www.hotel-c.com'),
+    ('ホテルD', 4, '4444444444', '22223333', '京都府', '京都市', '10-11-12', 'アクセス抜群', '駐車場あり', '伝統とモダンが融合したホテル', 'hotel_d.jpg', 'https://www.hotel-d.com'),
+    ('ホテルE', 5, '5555555555', '87654321', '北海道', '札幌市', '13-14-15', '地下鉄駅から直結', '有料パーキング', 'モダンな設備が整ったホテル', 'hotel_e.jpg', 'https://www.hotel-e.com');
+
+
+
+--プラン--
+INSERT INTO plans (name, hotel_id, breakfast, dinner, people_num, price, room_type, start_date, finish_date, warning, rest_room, close_flag)
+VALUES
+    ('プランA', 1, true, true, 2, 10000, 'シングルルーム', '2023-11-15', '2023-11-20', '特記事項なし', 5, false),
+    ('プランB', 2, false, true, 4, 15000, 'ダブルルーム', '2023-12-01', '2023-12-07', '要予約', 10, true),
+    ('プランC', 3, true, false, 1, 8000, 'シングルルーム', '2023-11-25', '2023-12-02', '非常に混雑', 3, false),
+    ('プランD', 4, true, true, 3, 12000, 'トリプルルーム', '2023-12-10', '2023-12-15', 'ペット不可', 7, false),
+    ('プランE', 5, true, true, 2, 11000, 'ダブルルーム', '2023-11-28', '2023-12-05', '禁煙フロア', 8, false);
+
+
+--予約情報--
+INSERT INTO reservations (plan_id, user_id, coupon_id, reservation_day, checkin_date, checkout_date, customer_name, customer_tel, customer_num, customer_others, payment_status, posted)
+VALUES
+    (1, 1, 1, '2023-11-10', '2023-11-15', '2023-11-18', '田中 太郎', 1111111111, 2, 'ベッドの希望: ファーム', 1, false),
+    (2, 2, 2, '2023-11-20', '2023-12-01', '2023-12-05', '山田 花子', 2222222222, 4, '食事制限: アレルギー対応の食事', 0, false),
+    (3, 3, 3, '2023-11-18', '2023-11-25', '2023-11-27', '田中 太郎', 3333333333, 1, '希望: 高層階の部屋', 1, false),
+    (4, 4, 4, '2023-12-05', '2023-12-10', '2023-12-15', '山田 花子', 4444444444, 3, '特別リクエスト: バリアフリーの部屋', 0, false),
+    (5, 5, 5, '2023-11-23', '2023-11-28', '2023-12-01', '佐藤 健太', 5555555555, 2, '', 1, false);
+
+--予約状況--
+INSERT INTO reservation_status (lodging_day, plan_id, reservation_id)
+VALUES
+    ('2023-11-16', 1, 1),
+    ('2023-12-03', 2, 2),
+    ('2023-11-28', 3, 3),
+    ('2023-12-12', 4, 4),
+    ('2023-11-30', 5, 5);
+
+
+
+--写真--
+INSERT INTO images (plan_id, image_path)
+VALUES
+    (1, 'plan_path_1.jpg'),
+    (2, 'plan_path_2.jpg'),
+    (3, 'plan_path_3.jpg'),
+    (4, 'plan_path_4.jpg'),
+    (5, 'plan_path_5.jpg');
+
+
+--クーポン--
+INSERT INTO coupons (name, plan_id, price, close_flag)
+VALUES
+    ('クーポンA', 1, 500, false),
+    ('クーポンB', 2, 1000, false),
+    ('クーポンC', 3, 800, false),
+    ('クーポンD', 4, 1200, false),
+    ('クーポンE', 5, 900, false);
+
+
+--ユーザーが所持しているクーポン--
+INSERT INTO user_coupon (coupon_id, user_id, used_flag)
+VALUES
+    (1, 1, false),
+    (2, 2, false),
+    (3, 3, false),
+    (4, 4, false),
+    (5, 5, false);
+
+--レビュー--
+INSERT INTO reviews (title, content, user_id, ster_num)
+VALUES
+    ('素晴らしいホテル体験', 'ホテルAでの滞在は素晴らしかったです。サービスも良く、部屋も清潔でした。また利用したいと思います。', 1, 5),
+    ('快適な宿泊', 'ホテルBはアクセスが良く、快適な宿泊ができました。スタッフの対応も素晴らしかったです。', 2, 4),
+    ('リラックスできるホテル', 'ホテルCはリラックスできる雰囲気で、静かな環境が魅力的でした。', 3, 5),
+    ('良いサービス', 'ホテルDのサービスは良かったです。快適な客室と親切なスタッフに感謝します。', 4, 4),
+    ('満足のいく滞在', 'ホテルEは期待以上の満足のいく滞在でした。アメニティも充実していて良かったです。', 5, 5);

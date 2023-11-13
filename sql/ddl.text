@@ -1,5 +1,3 @@
-CREATE DATABASE hotel_data;
-
 --ユーザー
 DROP TABLE IF EXISTS users;
 
@@ -12,7 +10,7 @@ CREATE TABLE users(
     prefectures varchar(10) NOT NULL,
     municipality varchar(10) NOT NULL,
     address varchar(20) NOT NULL,
-    telephone varchar(10) NOT NULL
+    telephone varchar(11) NOT NULL
 );
 COMMENT ON COLUMN users.zip_code IS '郵便番号';
 COMMENT ON COLUMN users.prefectures IS '都道府県';
@@ -50,8 +48,8 @@ CREATE TABLE plans(
     id SERIAL Primary Key Not Null,
     name text Not Null,
     hotel_id Integer Not Null,
-    breakfarst boolean Not Null,
-    diner boolean Not Null,
+    breakfast boolean Not Null,
+    dinner boolean Not Null,
     people_num Integer Not Null,
     price Integer Not Null,
     room_type text Not Null,
@@ -68,15 +66,17 @@ DROP TABLE IF EXISTS reservations;
 CREATE TABLE reservations(
     id SERIAL Primary Key Not Null,
     plan_id Integer Not Null,
+    user_id Integer Not Null,
+    coupon_id Integer,
     reservation_day timestamp Not Null,
     checkin_date timestamp Not Null,
-    checkinout_date timestamp Not Null,
+    checkout_date timestamp Not Null,
     customer_name text Not Null,
-    customer_tel Integer Not Null,
+    customer_tel varchar(11) Not Null,
     customer_num Integer Not Null,
     customer_others text ,
     payment_status Integer Not Null default 0,
-    coupon_id Integer
+    posted boolean default false
 );
 
 
@@ -128,6 +128,5 @@ CREATE TABLE reviews(
     title text Not Null,
     content text Not Null,
     user_id Integer Not Null,
-    ster_num Integer Not Null,
-    posted boolean default false
+    ster_num Integer Not Null
 );
